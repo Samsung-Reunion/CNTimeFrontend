@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const RunTimerPage = () => {
-  // 20분은 1200초입니다 (20분 * 60초).
-  const [time, setTime] = useState<number>(1200);
+  // 20분은 1200초입니다 (20분 * 60초). => 기본 25분 아닌가요 ㅇㅅㅇ
+  const [customMinutes, setCustomMinutes] = useState<number>(25);
+  const [time, setTime] = useState<number>(customMinutes * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
@@ -17,7 +18,10 @@ const RunTimerPage = () => {
       clearInterval(interval);
       setIsActive(false);
     }
-    if (interval) return () => clearInterval(interval);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isActive, time]);
   // 타이머 시작 및 중지
   const toggleTimer = () => {
@@ -33,13 +37,12 @@ const RunTimerPage = () => {
 
   return (
     <div>
-      <h1>집중 time </h1>
+      <h1 className="text-green-500">집중 time </h1>
       <h1>{formatTime(time)}</h1>
-      <button onClick={toggleTimer}>{isActive ? 'Pause' : 'Start'}</button>
+      <button onClick={toggleTimer}>{isActive ? "Pause" : "Start"}</button>
       <Link
         to="/breaktimer"
-        className="flex items-center gap-2 text-lg font-semibold md:text-base"
-      >
+        className="flex items-center gap-2 text-lg font-semibold md:text-base">
         <p className="text-2xl text-green-500">휴식하기</p>
       </Link>
       {isActive ? (
@@ -47,8 +50,7 @@ const RunTimerPage = () => {
       ) : (
         <Link
           to="/finishtask"
-          className="flex items-center gap-2 text-lg font-semibold md:text-base"
-        >
+          className="flex items-center gap-2 text-lg font-semibold md:text-base">
           <p className="text-2xl text-green-500">그만두기</p>
         </Link>
       )}

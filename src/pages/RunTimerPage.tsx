@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import CircularProgressBar from "../components/circularProgressbar";
 
 const RunTimerPage = () => {
   // 20분은 1200초입니다 (20분 * 60초). => 기본 25분 아닌가요 ㅇㅅㅇ
-  const [customMinutes, setCustomMinutes] = useState<number>(25);
+  const [customMinutes] = useState<number>(2);
   const [time, setTime] = useState<number>(customMinutes * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [maxTime] = useState<number>(time);
 
   useEffect(() => {
     let interval = null;
@@ -36,22 +38,27 @@ const RunTimerPage = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-green-500">집중 time </h1>
-      <h1>{formatTime(time)}</h1>
-      <button onClick={toggleTimer}>{isActive ? "Pause" : "Start"}</button>
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <h1 className="text-4xl text-indigo-500">집중 time </h1>
+      <CircularProgressBar
+        percentage={(time / maxTime) * 100}
+        timeText={formatTime(time)}
+      />
+      <button onClick={toggleTimer} className="text-3xl text-indigo-700 mb-4">
+        {isActive ? "Pause" : "Start"}
+      </button>
       <Link
         to="/breaktimer"
-        className="flex items-center gap-2 text-lg font-semibold md:text-base">
-        <p className="text-2xl text-green-500">휴식하기</p>
+        className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base">
+        <p className="text-2xl text-indigo-700">휴식하기</p>
       </Link>
       {isActive ? (
         <></>
       ) : (
         <Link
           to="/finishtask"
-          className="flex items-center gap-2 text-lg font-semibold md:text-base">
-          <p className="text-2xl text-green-500">그만두기</p>
+          className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base">
+          <p className="text-2xl text-indigo-700">그만두기</p>
         </Link>
       )}
     </div>

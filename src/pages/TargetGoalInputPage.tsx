@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "../index.css";
 import { useState } from "react";
+import Navigation from "../components/navigation";
 
 const TargetGoalInputPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -19,6 +20,7 @@ const TargetGoalInputPage = () => {
 
   return (
     <div className="flex flex-col justify-top items-center w-full h-full">
+      <Navigation canNavigateBack={true} />
       <div className="flex justify-center items-center mt-36 mb-8">
         <div
           className="absolute w-12 h-12 rounded-full"

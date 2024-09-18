@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import CircularProgressBar from "../components/circularProgressbar";
+import Navigation from "../components/navigation";
 
 const RunTimerPage = () => {
   const location = useLocation();
@@ -42,6 +43,7 @@ const RunTimerPage = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
       <h1 className="text-4xl text-indigo-500">{target_goal} </h1>
+      <Navigation canNavigateBack={false} currentProjectName={"프로젝트명"} />
       <CircularProgressBar
         percentage={(time / maxTime) * 100}
         timeText={formatTime(time)}

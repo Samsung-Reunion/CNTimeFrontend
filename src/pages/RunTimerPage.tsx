@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CircularProgressBar from "../components/circularProgressbar";
 
 const RunTimerPage = () => {
-  // 20분은 1200초입니다 (20분 * 60초). => 기본 25분 아닌가요 ㅇㅅㅇ
-  const [customMinutes] = useState<number>(2);
+  const location = useLocation();
+  const { target_goal } = location.state || {};
+
+  const [customMinutes] = useState<number>(25);
   const [time, setTime] = useState<number>(customMinutes * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [maxTime] = useState<number>(time);
@@ -39,7 +41,7 @@ const RunTimerPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <h1 className="text-4xl text-indigo-500">집중 time </h1>
+      <h1 className="text-4xl text-indigo-500">{target_goal} </h1>
       <CircularProgressBar
         percentage={(time / maxTime) * 100}
         timeText={formatTime(time)}

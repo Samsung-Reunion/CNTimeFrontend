@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import CircularProgressBar from "../components/circularProgressbar";
+import ActiveUser from "../components/activeUser";
 import Navigation from "../components/navigation";
 
 const RunTimerPage = () => {
@@ -11,6 +12,13 @@ const RunTimerPage = () => {
   const [time, setTime] = useState<number>(customMinutes * 60);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [maxTime] = useState<number>(time);
+
+  const testUsers = [
+    { userId: 1, userName: "팀원 1", activeStatus: true },
+    { userId: 2, userName: "팀원 2", activeStatus: false },
+    { userId: 3, userName: "팀원 3", activeStatus: true },
+    { userId: 4, userName: "팀원 4", activeStatus: false },
+  ];
 
   useEffect(() => {
     let interval = null;
@@ -44,6 +52,15 @@ const RunTimerPage = () => {
     <div className="flex flex-col justify-center items-center w-full h-full">
       <h1 className="text-4xl text-indigo-500">{target_goal} </h1>
       <Navigation canNavigateBack={false} currentProjectName={"프로젝트명"} />
+      <div className="flex flex-row justify-start items-center w-full h-fit gap-2 mb-8">
+        {testUsers.map((item) => (
+          <ActiveUser
+            key={item.userId}
+            userName={item.userName}
+            activeStatus={item.activeStatus}
+          />
+        ))}
+      </div>
       <CircularProgressBar
         percentage={(time / maxTime) * 100}
         timeText={formatTime(time)}

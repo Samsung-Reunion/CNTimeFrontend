@@ -8,9 +8,7 @@ const TargetGoalInputPage = () => {
   const [isFocused, setIsFocused] = useState(false);
   const maxLength = 50; // 최대 글자 수 설정
 
-  const handleCheckInput = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
+  const handleCheckInput = (e: React.MouseEvent) => {
     if (inputValue.trim() === "") {
       e.preventDefault();
       setIsInputEmpty(true);

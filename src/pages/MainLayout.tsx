@@ -2,9 +2,10 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 const MainLayout = () => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className=" w-full max-w-lg h-full flex flex-col justify-center items-center">
-        <Header />
+
+    <div className="flex justify-center">
+      <div className="flex flex-col w-app-width h-screen bg-cntimer-background px-6">
+
         <Outlet />
       </div>
     </div>

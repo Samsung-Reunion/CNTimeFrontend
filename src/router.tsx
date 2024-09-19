@@ -1,3 +1,4 @@
+
 import { RouteObject } from 'react-router-dom';
 import MainLayout from './pages/MainLayout';
 import HomePage from './pages/HomePage';
@@ -8,12 +9,15 @@ import EnterNamePage from './pages/EnterNamePage';
 import CreateOrJoinPage from './pages/CreateOrJoinPage';
 import ProjectNamePage from './pages/ProjectNamePage';
 import ProjectCodePage from './pages/ProjectCodePage';
+import TargetGoalInputPage from "./pages/TargetGoalInputPage";
+
 
 const routes: RouteObject[] = [
   {
-    path: '/',
+    path: "/",
     element: <MainLayout />,
     children: [
+
       { path: '/entername', element: <EnterNamePage /> },
       { path: '/createorjoin', element: <CreateOrJoinPage /> },
       { path: '/projectname', element: <ProjectNamePage /> },
@@ -23,6 +27,8 @@ const routes: RouteObject[] = [
       { path: '/runtimer', element: <RunTimerPage /> },
       { path: '/breaktimer', element: <BreakTimerPage /> },
       { path: '/finishtask', element: <FinishTaskPage /> },
+      { path: "/writegoal", element: <TargetGoalInputPage /> },
+
     ],
   },
 ];

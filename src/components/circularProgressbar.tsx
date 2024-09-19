@@ -9,71 +9,114 @@ const CircularProgressBar = ({
   percentage,
   timeText,
 }: CircularProgressBarProps) => {
-  const radius = 180;
+  const radius = 280;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = (percentage / 100) * circumference;
 
   console.log("per : " + percentage);
 
   return (
-    <div className="flex items-center justify-center mt-4 mb-10">
+    <div className="flex items-center justify-center w-96 h-96 mt-4 mb-10">
       <svg
         className="transform -rotate-90"
-        width={400}
-        height={400}
-        viewBox="0 0 400 400">
+        width="100%"
+        height="100%"
+        viewBox="0 0 600 600">
         <defs>
           {/* 그라데이션 정의 */}
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#34D399" /> {/* 초록색 */}
-            <stop offset="100%" stopColor="#3B82F6" /> {/* 파란색 */}
+          <linearGradient id="backGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#6AB2FF" />
+            <stop offset="47%" stopColor="#3B4BFF" />
+            <stop offset="100%" stopColor="#3DE0B1" />
           </linearGradient>
+          <linearGradient
+            id="timerGradient"
+            x1="0%"
+            y1="100%"
+            x2="100%"
+            y2="0%">
+            <stop offset="0%" stopColor="#B9DBFF" />
+            <stop offset="47%" stopColor="#7883FF" />
+            <stop offset="100%" stopColor="#4CF7C7" />
+          </linearGradient>
+          <linearGradient id="textGradient" x1="0%" y1="30%" x2="100%" y2="70%">
+            <stop offset="0%" stopColor="#B9DBFF" />
+            <stop offset="47%" stopColor="#7883FF" />
+            <stop offset="100%" stopColor="#4CF7C7" />
+          </linearGradient>
+          <filter
+            id="blurFilter"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+            filterUnits="userSpaceOnUse">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
         </defs>
         <circle
-          cx="200"
-          cy="200"
+          cx="300"
+          cy="300"
           r={radius}
-          strokeWidth="30"
-          className="text-gray-400"
-          stroke="currentColor"
+          strokeWidth="14"
+          stroke="url(#backGradient)"
           fill="transparent"
-        />
-
-        <circle
-          cx="200"
-          cy="200"
-          r={radius}
-          strokeWidth="30"
-          className="text-blue-500"
-          strokeDasharray="1 1130" // 작게 둥글게 보이는 부분만 남기기
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round" // 둥글게 만들기
-          stroke="url(#gradient)"
-          fill="transparent"
-          opacity={percentage < 99.5 ? 1.0 : 0}
           style={{
-            transition: "stroke-dashoffset 1s linear", // 부드러운 이동 애니메이션
+            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+            opacity: "30%",
+            border: "transparent",
           }}
         />
 
         <circle
-          cx="200"
-          cy="200"
+          cx="300"
+          cy="300"
           r={radius}
-          strokeWidth="30"
+          strokeWidth="14"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          strokeLinecap="butt"
-          stroke="url(#gradient)"
+          strokeLinecap="round"
+          stroke="url(#backGradient)"
           fill="transparent"
+          filter="url(#blurFilter)"
           style={{
-            transition: "stroke-dashoffset 1s linear", // 부드러운 이동 애니메이션
+            transition: "stroke-dashoffset 1s linear",
+            border: "transparent",
+            opacity: "100%",
           }}
         />
+
+        <circle
+          cx="300"
+          cy="300"
+          r={radius}
+          strokeWidth="14"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          stroke="url(#timerGradient)"
+          fill="transparent"
+          style={{
+            transition: "stroke-dashoffset 1s linear",
+            opacity: "100%",
+          }}
+        />
+
+        <text
+          x="50%"
+          y="50%"
+          fill="url(#textGradient)"
+          dominantBaseline="middle"
+          textAnchor="middle"
+          transform="rotate(90, 300, 300)"
+          className="font-pretendard text-8xl font-medium text-center"
+          style={{ border: "transparent" }}>
+          {timeText}
+        </text>
       </svg>
-      <span className="absolute text-6xl font-semibold text-blue-500">
+      {/* <span className="absolute text-6xl font-semibold text-blue-500">
         {timeText}
-      </span>
+      </span> */}
     </div>
   );
 };

@@ -1,38 +1,65 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import RoundedBtn from '../components/RoundedBtn';
+import { Link } from 'react-router-dom';
+import Navigation from '../components/navigation';
 
 const ProjectNamePage = () => {
-  const navigate = useNavigate(); // useNavigate 훅 사용
   const [text, setText] = useState('');
   // 입력 값이 변경될 때 호출되는 함수
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value); // 입력된 텍스트를 상태로 저장
-  };
+  const [isInputEmpty, setIsInputEmpty] = useState(false); // for alert
+  const [isFocused, setIsFocused] = useState(false);
+  const maxLength = 30; // 최대 글자 수 설정
 
-  const onClick = () => {
-    navigate('/projectcode');
+  const handleCheckInput = (e: React.MouseEvent) => {
+    if (text.trim() === '') {
+      e.preventDefault();
+      setIsInputEmpty(true);
+    } else {
+      setIsInputEmpty(false);
+    }
   };
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full">
-      <div className="w-[349px] text-white text-[15px] font-medium font-['Pretendard']">
-        프로젝트 이름을 입력해주세요
-      </div>
-      <div className="relative">
-        <input
-          type="text"
-          value={text}
-          onChange={handleChange}
-          maxLength={30}
-          placeholder="프로젝트 이름을 입력해주세요..."
-          className="w-[349px] h-[50px] pl-[17px] pr-[18px] pt-[15px] pb-4 mt-[10px] mb-[25px] bg-[#23262b] text-white text-base font-semibold font-['Pretendard'] rounded-[10px] justify-center items-start gap-[242px] inline-flex"
-        />
-        <div className="text-right text-[#6b727f] text-[13px] font-normal font-['Pretendard'] absolute right-5 bottom-10 tracking-tight">
-          {text.length}/30
+    <div className="flex flex-col justify-start items-center w-full h-full">
+      <Navigation canNavigateBack={true} />
+      <div className="flex flex-col justify-center items-center h-full">
+        <div className="w-[349px]  self-start text-white text-[15px] font-medium font-['Pretendard']">
+          프로젝트 이름을 입력해주세요
         </div>
+        <div className="relative  mb-6 mt-[10px]">
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+              if (e.target.value.trim() === '') {
+                setIsInputEmpty(true);
+              } else {
+                setIsInputEmpty(false);
+              }
+            }}
+            placeholder="프로젝트 이름을 입력해주세요..."
+            className={
+              ' w-96 p-3 pl-5 pr-16 rounded-lg border bg-cntimer-grey focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent  text-white placeholder-gray-400 transition-all duration-200 font-pretendard font-semibold text-base' +
+              `border ${
+                isInputEmpty ? 'border-red-600' : 'border-cntimer-grey'
+              } ${isInputEmpty && !isFocused ? 'animate-pulse' : ''}`
+            }
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            maxLength={maxLength}
+          />
+          <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm font-pretendard">
+            {text.length} / {maxLength}
+          </span>
+        </div>
+        <Link
+          to="/projectcode"
+          state={{ target_goal: text }}
+          className="w-96 p-3 px-5 text-white bg-cntimer-blue rounded-full font-pretendard font-bold text-base text-center transition transform hover:bg-cntimer-blue-semidark  focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-99"
+          onClick={handleCheckInput}
+        >
+          프로젝트 생성하기
+        </Link>
       </div>
-
-      <RoundedBtn text="프로젝트 생성하기" onClick={onClick} />
     </div>
   );
 };

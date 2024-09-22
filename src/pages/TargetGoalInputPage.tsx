@@ -36,7 +36,7 @@ const TargetGoalInputPage = () => {
           <h2 className="text-6xl">🎯</h2>
         </div>
       </div>
-      <h2 className="text-3xl text-white font-pretendard font-semibold mb-12">
+      <h2 className="text-2xl text-white font-pretendard font-semibold mb-12">
         목표를 입력해주세요
       </h2>
       <div className="relative w-96 mb-6">

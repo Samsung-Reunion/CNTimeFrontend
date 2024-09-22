@@ -41,10 +41,11 @@ const RestTimerPage = () => {
     closeGoalModal();
   };
   const handleCFConfirm = () => {
-    navigate('/finishtask');
+    navigate('/finishtask', { state: { isGoalCleared: true } });
   };
   const handleCFCancel = () => {
     closeConfirmModal();
+    navigate('/finishtask', { state: { isGoalCleared: false } });
   };
 
   useEffect(() => {
@@ -115,7 +116,7 @@ const RestTimerPage = () => {
         onCancel={handleCFCancel}
       >
         <span className="font-pretendard font-white text-base font-medium">
-          목표 달성을 그만두실거예요?
+          목표 달성에 성공하셨나요?
         </span>
       </Modal>
       <div className="flex flex-col justify-top items-center">

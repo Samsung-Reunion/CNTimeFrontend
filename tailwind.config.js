@@ -16,6 +16,7 @@ module.exports = {
         'cntimer-bg-dark-grey': '#23262B',
         'cntimer-bg-dark-grey-hovered': '#1A1C1F',
         'cntimer-bg-goal-text-grey': '#35373c',
+        'cntimer-bg-finish-goaltext': '#3A3E44',
       },
       maxWidth: {
         modal: '23rem',
@@ -23,6 +24,7 @@ module.exports = {
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
         roboto_mono: ['Roboto Mono', 'sans-serif'],
+        gangwon_eduall: ['GangwonEduAll', 'sans-serif'],
       },
       scale: {
         101: '1.01',
@@ -32,6 +34,14 @@ module.exports = {
       },
       width: {
         'app-width': '420px',
+      },
+      fontSize: {
+        '4.5xl': [
+          '2.6rem',
+          {
+            lineHeight: '2.8rem',
+          },
+        ],
       },
     },
   },

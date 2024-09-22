@@ -3,7 +3,9 @@ import React, { createContext, useContext, useState } from 'react';
 interface SharedGlobalState {
   jwt_token: string;
   current_project_id: string;
+  current_project_name: string;
   current_team_id: string;
+  overall_work_time_today: number;
 }
 
 interface SharedTimerState {
@@ -29,7 +31,9 @@ export const StateProvider = ({ children }: { children: React.ReactNode }) => {
     {
       jwt_token: '',
       current_project_id: '',
+      current_project_name: '프로젝트명',
       current_team_id: '',
+      overall_work_time_today: 0,
     }
   );
 

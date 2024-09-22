@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CircularProgressBar from '../components/circularProgressbar';
-import ActiveUser from '../components/activeUser';
+import ActiveUser from '../components/ActiveUser';
 import Navigation from '../components/navigation';
 import doneImage from '../assets/done.png';
 import { useSharedState } from '../StateContext';
@@ -17,7 +17,7 @@ const RunTimerPage = () => {
   const target_goal = sharedTimerState.current_goal;
 
   const ppomoMinutesFixed = 0.1;
-  const delayFinishTime = 3000;
+  const delayFinishTime = 2000;
 
   const [ppomoMinutes] = useState<number>(ppomoMinutesFixed);
   const [time, setTime] = useState<number>(ppomoMinutes * 60);
@@ -38,11 +38,7 @@ const RunTimerPage = () => {
   const handleGoalConfirm = () => {
     closeGoalModal();
     openConfirmModal();
-  };
-  const handleGoalCancel = () => {
-    closeGoalModal();
-  };
-  const handleCFConfirm = () => {
+
     // timer 정지
     setIsActive(false);
 
@@ -55,10 +51,18 @@ const RunTimerPage = () => {
           ? sharedTimerState.total_turn + 1
           : sharedTimerState.total_turn,
     }));
-    navigate('/finishtask');
+  };
+
+  const handleGoalCancel = () => {
+    closeGoalModal();
+  };
+
+  const handleCFConfirm = () => {
+    navigate('/finishtask', { state: { isGoalCleared: true } });
   };
   const handleCFCancel = () => {
     closeConfirmModal();
+    navigate('/finishtask', { state: { isGoalCleared: false } });
   };
 
   const testUsers = [
@@ -135,7 +139,7 @@ const RunTimerPage = () => {
         onCancel={handleCFCancel}
       >
         <span className="font-pretendard font-white text-base font-medium">
-          목표 달성을 그만두실거예요?
+          목표 달성에 성공하셨나요?
         </span>
       </Modal>
       {!isDone ? (

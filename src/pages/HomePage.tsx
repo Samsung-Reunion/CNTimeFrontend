@@ -1,19 +1,16 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/navigation';
 import TeammateCard from '../components/TeammateCard';
+import { formatTimeHours } from '../utils/utils';
+import { useSharedState } from '../StateContext';
 
 const HomePage = () => {
+  const { sharedGlobalState } = useSharedState();
+
   const radius = 280;
   const currentProject = '개뿌 아자아자';
   // 시간을 분:초 형식으로 변환하는 함수
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60)
-      .toString()
-      .padStart(2, '0');
-    const seconds = (time % 60).toString().padStart(2, '0');
-    return `${minutes}:${seconds}`;
-  };
-  const focusTime = '00:10:02';
+  const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
   const teammates = [
     {
       profile: 'C',

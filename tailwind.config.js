@@ -13,7 +13,7 @@ module.exports = {
         'cntimer-skyblue': '#719BFF',
         'cntimer-background': '#101212',
         'cntimer-lightgrey': '#ABAEB3',
-        'cntimer-totalbg-grey': '#23262B',
+        'cntimer-bg-dark-grey': '#23262B',
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],

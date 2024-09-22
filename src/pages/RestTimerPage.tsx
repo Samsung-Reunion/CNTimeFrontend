@@ -86,7 +86,7 @@ const RestTimerPage = () => {
               <div
                 id="totalTimeBox"
                 className={
-                  'p-3 py-2 font-pretendard text-white font-bold bg-cntimer-totalbg-grey rounded-lg ' +
+                  'p-3 py-2 font-pretendard text-white font-bold bg-cntimer-bg-dark-grey rounded-lg ' +
                   (total_hour / 10 >= 1 ? 'text-xl' : 'text-2xl')
                 }
               >

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CircularProgressBar from '../components/circularProgressbar';
 import ActiveUser from '../components/activeUser';
 import Navigation from '../components/navigation';
 import doneImage from '../assets/done.png';
 import { useSharedState } from '../StateContext';
 import { formatTime } from '../utils/utils';
+import GoalModal from '../components/GoalModal';
+import Modal from '../components/Modal';
 
 const RunTimerPage = () => {
   // Global State
@@ -23,6 +25,41 @@ const RunTimerPage = () => {
   const [isDone, setIsDone] = useState<boolean>(false);
   const [maxTime] = useState<number>(time);
   const [timeInterval, setTimeInterval] = useState<number>(-1);
+
+  // Modal
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState<boolean>(false);
+  const openGoalModal = () => setIsGoalModalOpen(true);
+  const closeGoalModal = () => setIsGoalModalOpen(false);
+
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
+  const handleGoalConfirm = () => {
+    closeGoalModal();
+    openConfirmModal();
+  };
+  const handleGoalCancel = () => {
+    closeGoalModal();
+  };
+  const handleCFConfirm = () => {
+    // timer 정지
+    setIsActive(false);
+
+    setSharedTimerState((prevState) => ({
+      ...prevState,
+      total_work_time:
+        sharedTimerState.total_work_time + Math.floor(maxTime - time),
+      total_turn:
+        time != maxTime
+          ? sharedTimerState.total_turn + 1
+          : sharedTimerState.total_turn,
+    }));
+    navigate('/finishtask');
+  };
+  const handleCFCancel = () => {
+    closeConfirmModal();
+  };
 
   const testUsers = [
     { userId: 1, userName: '팀원 1', activeStatus: true },
@@ -86,6 +123,21 @@ const RunTimerPage = () => {
 
   return (
     <div className="w-full h-full">
+      <GoalModal
+        isOpen={isGoalModalOpen}
+        onConfirm={handleGoalConfirm}
+        onCancel={handleGoalCancel}
+        targetGoal={sharedTimerState.current_goal}
+      />
+      <Modal
+        isOpen={isConfirmModalOpen}
+        onConfirm={handleCFConfirm}
+        onCancel={handleCFCancel}
+      >
+        <span className="font-pretendard font-white text-base font-medium">
+          목표 달성을 그만두실거예요?
+        </span>
+      </Modal>
       {!isDone ? (
         <div
           id="timerDiv"
@@ -125,13 +177,19 @@ const RunTimerPage = () => {
             {isActive ? '⏸︎' : '▶'}
           </button>
           {!isActive && time !== 0 && (
-            <Link
-              id="finishTaskLink"
-              to="/finishtask"
+            // <Link
+            //   id="finishTaskLink"
+            //   to="/finishtask"
+            //   className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base underline text-cntimer-main-grey underline-offset-8"
+            // >
+            //   이번 뽀모 끝내기
+            // </Link>
+            <button
               className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base underline text-cntimer-main-grey underline-offset-8"
+              onClick={openGoalModal}
             >
-              이번 뽀모 끝내기
-            </Link>
+              이번 타이머 끝내기
+            </button>
           )}
         </div>
       ) : (

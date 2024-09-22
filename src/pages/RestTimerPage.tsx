@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSharedState } from '../StateContext';
 import CircularProgressBar from '../components/circularProgressbar';
 import { formatTime } from '../utils/utils';
+import GoalModal from '../components/GoalModal';
+import Modal from '../components/Modal';
 
 const RestTimerPage = () => {
   const { sharedTimerState, setSharedTimerState } = useSharedState();
@@ -21,6 +23,29 @@ const RestTimerPage = () => {
   const [nextTimeInterval, setNextTimeInterval] = useState<number>(-1);
 
   const [nextTurnFlag, setNextTurnFlag] = useState<boolean>(false);
+
+  // Modal
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState<boolean>(false);
+  const openGoalModal = () => setIsGoalModalOpen(true);
+  const closeGoalModal = () => setIsGoalModalOpen(false);
+
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
+  const handleGoalConfirm = () => {
+    closeGoalModal();
+    openConfirmModal();
+  };
+  const handleGoalCancel = () => {
+    closeGoalModal();
+  };
+  const handleCFConfirm = () => {
+    navigate('/finishtask');
+  };
+  const handleCFCancel = () => {
+    closeConfirmModal();
+  };
 
   useEffect(() => {
     if (time > 0 && timeInterval == -1) {
@@ -78,6 +103,21 @@ const RestTimerPage = () => {
 
   return (
     <div className="w-full h-full">
+      <GoalModal
+        isOpen={isGoalModalOpen}
+        onConfirm={handleGoalConfirm}
+        onCancel={handleGoalCancel}
+        targetGoal={sharedTimerState.current_goal}
+      />
+      <Modal
+        isOpen={isConfirmModalOpen}
+        onConfirm={handleCFConfirm}
+        onCancel={handleCFCancel}
+      >
+        <span className="font-pretendard font-white text-base font-medium">
+          목표 달성을 그만두실거예요?
+        </span>
+      </Modal>
       <div className="flex flex-col justify-top items-center">
         {!isDone ? (
           <div className="flex flex-col justify-top items-center w-full h-full ">
@@ -164,13 +204,12 @@ const RestTimerPage = () => {
         >
           바로 시작하기
         </button>
-        <Link
-          id="finishTaskLink"
-          to="/finishtask"
+        <button
           className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base underline text-cntimer-main-grey underline-offset-8"
+          onClick={openGoalModal}
         >
           이번 목표 끝내기
-        </Link>
+        </button>
       </div>
     </div>
   );

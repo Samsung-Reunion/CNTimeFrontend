@@ -14,6 +14,11 @@ module.exports = {
         'cntimer-background': '#101212',
         'cntimer-lightgrey': '#ABAEB3',
         'cntimer-bg-dark-grey': '#23262B',
+        'cntimer-bg-dark-grey-hovered': '#1A1C1F',
+        'cntimer-bg-goal-text-grey': '#35373c',
+      },
+      maxWidth: {
+        modal: '23rem',
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],

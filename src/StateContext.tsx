@@ -9,6 +9,7 @@ interface SharedGlobalState {
 interface SharedTimerState {
   total_work_time: number;
   current_goal: string;
+  total_turn: number;
 }
 
 interface ContextType {
@@ -35,6 +36,7 @@ export const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const [sharedTimerState, setSharedTimerState] = useState<SharedTimerState>({
     total_work_time: 0,
     current_goal: '',
+    total_turn: 0,
   });
 
   return (

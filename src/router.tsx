@@ -10,6 +10,7 @@ import ProjectCodePage from './pages/ProjectCodePage';
 import TargetGoalInputPage from './pages/TargetGoalInputPage';
 import LoginPage from './pages/LoginPage';
 import JoinProjectPage from './pages/JoinProjectPage';
+import RestTimerPage from './pages/RestTimerPage';
 
 const routes: RouteObject[] = [
   {
@@ -24,6 +25,7 @@ const routes: RouteObject[] = [
       { path: '/projectname', element: <ProjectNamePage /> },
       { path: '/projectcode', element: <ProjectCodePage /> },
       { path: '/runtimer', element: <RunTimerPage /> },
+      { path: '/resttimer', element: <RestTimerPage /> },
       { path: '/finishtask', element: <FinishTaskPage /> },
       { path: '/writegoal', element: <TargetGoalInputPage /> },
     ],

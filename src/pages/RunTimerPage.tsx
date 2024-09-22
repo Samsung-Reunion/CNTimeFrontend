@@ -5,6 +5,7 @@ import ActiveUser from '../components/activeUser';
 import Navigation from '../components/navigation';
 import doneImage from '../assets/done.png';
 import { useSharedState } from '../StateContext';
+import { formatTime } from '../utils/utils';
 
 const RunTimerPage = () => {
   // Global State
@@ -13,7 +14,7 @@ const RunTimerPage = () => {
   const navigate = useNavigate();
   const target_goal = sharedTimerState.current_goal;
 
-  const ppomoMinutesFixed = 2;
+  const ppomoMinutesFixed = 0.1;
   const delayFinishTime = 3000;
 
   const [ppomoMinutes] = useState<number>(ppomoMinutesFixed);
@@ -21,6 +22,7 @@ const RunTimerPage = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
   const [maxTime] = useState<number>(time);
+  const [timeInterval, setTimeInterval] = useState<number>(-1);
 
   const testUsers = [
     { userId: 1, userName: '팀원 1', activeStatus: true },
@@ -30,51 +32,56 @@ const RunTimerPage = () => {
   ];
 
   useEffect(() => {
-    let interval = null;
-
-    if (isActive && time > 0) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (time === 0 && interval) {
+    if (isActive && time > 0 && timeInterval == -1) {
+      setTimeInterval(
+        setInterval(() => {
+          setTime((prevTime) => prevTime - 1);
+          console.log('HI');
+        }, 1000)
+      );
+    } else if (time === 0 && isActive && timeInterval != -1) {
       // Timer is off, time to rest
-      clearInterval(interval);
       setIsActive(false);
-      setIsDone(true);
+      console.log('clear');
+      clearInterval(timeInterval);
+      setTimeInterval(-1);
 
-      // move to rest page
-      setInterval(() => {
-        setSharedTimerState((prevState) => ({
-          ...prevState,
-          total_work_time: sharedTimerState.total_work_time + ppomoMinutes,
-        }));
-        navigate('/restTimer');
-      }, delayFinishTime);
+      // Wait for animation finish
+      setTimeout(() => {
+        setIsDone(true);
+
+        // move to rest page
+        setTimeout(() => {
+          setSharedTimerState((prevState) => ({
+            ...prevState,
+            total_work_time:
+              sharedTimerState.total_work_time + Math.floor(maxTime - time),
+            total_turn: sharedTimerState.total_turn + 1,
+          }));
+          navigate('/resttimer');
+        }, delayFinishTime);
+      }, 2000);
     }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
+
+    if (!isActive && timeInterval != -1) {
+      clearInterval(timeInterval);
+      setTimeInterval(-1);
+    }
   }, [
     isActive,
     time,
     ppomoMinutes,
     setSharedTimerState,
+    setIsDone,
     sharedTimerState,
     navigate,
+    timeInterval,
+    maxTime,
   ]);
 
   // 타이머 시작 및 중지
   const toggleTimer = () => {
     setIsActive(!isActive);
-  };
-
-  // 시간을 분:초 형식으로 변환하는 함수
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60)
-      .toString()
-      .padStart(2, '0');
-    const seconds = (time % 60).toString().padStart(2, '0');
-    return `${minutes}:${seconds}`;
   };
 
   return (
@@ -88,7 +95,7 @@ const RunTimerPage = () => {
             canNavigateBack={false}
             currentProjectName={'프로젝트명'}
           />
-          <div className="flex flex-row justify-start items-center w-full h-fit gap-2 mb-8">
+          <div className="flex flex-row justify-start items-center w-full h-fit gap-2 mb-7">
             {testUsers.map((item) => (
               <ActiveUser
                 key={item.userId}
@@ -109,6 +116,7 @@ const RunTimerPage = () => {
           </h1>
           <button
             onClick={toggleTimer}
+            disabled={time === 0 ? true : false}
             className={
               'active:scale-98 transition-transform text-white-700 mb-6 from-cntimer-skyblue to-cntimer-blue bg-gradient-to-br w-52 h-14 rounded-xl text-center flex justify-center items-center ' +
               (isActive ? 'text-5xl' : 'text-4xl')
@@ -116,13 +124,13 @@ const RunTimerPage = () => {
           >
             {isActive ? '⏸︎' : '▶'}
           </button>
-          {!isActive && (
+          {!isActive && time !== 0 && (
             <Link
               id="finishTaskLink"
               to="/finishtask"
               className="flex justify-center items-center gap-2 text-lg font-semibold md:text-base underline text-cntimer-main-grey underline-offset-8"
             >
-              이번 목표 끝내기
+              이번 뽀모 끝내기
             </Link>
           )}
         </div>

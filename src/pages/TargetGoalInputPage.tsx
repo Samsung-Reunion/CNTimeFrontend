@@ -22,6 +22,7 @@ const TargetGoalInputPage = () => {
       setSharedTimerState({
         total_work_time: 0,
         current_goal: inputValue.trim(),
+        total_turn: 0,
       });
     }
   };

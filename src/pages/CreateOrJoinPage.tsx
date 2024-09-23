@@ -1,5 +1,5 @@
-import Navigation from '../components/Navigation';
-import SquaredBtn from '../components/SquaredBtn';
+import Navigation from '@components/Navigation';
+import SquaredBtn from '@components/SquaredBtn';
 import { useNavigate } from 'react-router-dom';
 
 const CreateOrJoinPage = () => {

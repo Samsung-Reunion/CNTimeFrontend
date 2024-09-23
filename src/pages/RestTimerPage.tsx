@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSharedState } from '../StateContext';
-import CircularProgressBar from '../components/CircularProgressbar';
-import { formatTime } from '../utils/utils';
-import GoalModal from '../components/GoalModal';
-import Modal from '../components/Modal';
+import { useSharedState } from '@/StateContext';
+import CircularProgressBar from '@components/CircularProgressbar';
+import { formatTime } from '@utils/utils';
+import GoalModal from '@components/GoalModal';
+import Modal from '@components/Modal';
 
 const RestTimerPage = () => {
   const { sharedTimerState, setSharedTimerState } = useSharedState();
@@ -18,9 +18,11 @@ const RestTimerPage = () => {
   const [restMinutes] = useState<number>(restMinutesFixed);
   const [time, setTime] = useState<number>(restMinutes * 60);
   const [maxTime] = useState<number>(time);
-  const [timeInterval, setTimeInterval] = useState<number>(-1);
+  const [timeInterval, setTimeInterval] = useState<number | NodeJS.Timeout>(-1);
   const [nextStepTime, setNextStepTime] = useState<number>(10);
-  const [nextTimeInterval, setNextTimeInterval] = useState<number>(-1);
+  const [nextTimeInterval, setNextTimeInterval] = useState<
+    number | NodeJS.Timeout
+  >(-1);
 
   const [nextTurnFlag, setNextTurnFlag] = useState<boolean>(false);
 

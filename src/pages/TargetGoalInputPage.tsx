@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import '../index.css';
 import { useState } from 'react';
-import Navigation from '../components/Navigation';
-import { useSharedState } from '../StateContext';
+import Navigation from '@components/Navigation';
+import { useSharedState } from '@/StateContext';
+import '@/index.css';
 
 const TargetGoalInputPage = () => {
   const [inputValue, setInputValue] = useState('');

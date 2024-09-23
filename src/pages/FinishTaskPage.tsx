@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSharedState } from '../StateContext';
-import fanfareImage from '../assets/fanfare.png';
-import targetImage from '../assets/target.png';
-import finishMarkImage from '../assets/finishMark.png';
-import fireImage from '../assets/fire.png';
-import TextareaWithUnderline from '../components/TextareaWithUnderline';
+import { useSharedState } from '@/StateContext';
+import fanfareImage from '@assets/fanfare.png';
+import targetImage from '@assets/target.png';
+import finishMarkImage from '@assets/finishMark.png';
+import fireImage from '@assets/fire.png';
+import TextareaWithUnderline from '@components/TextareaWithUnderline';
 import { useState } from 'react';
-import { formatTimeHours } from '../utils/utils';
+import { formatTimeHours } from '@utils/utils';
 
 const FinishTaskPage = () => {
   // Global State

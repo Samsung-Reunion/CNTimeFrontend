@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import Navigation from '../components/navigation';
-import TeammateCard from '../components/TeammateCard';
-import { formatTimeHours } from '../utils/utils';
-import { useSharedState } from '../StateContext';
+import Navigation from '@components/Navigation';
+import TeammateCard from '@components/TeammateCard';
+import { formatTimeHours } from '@utils/utils';
+import { useSharedState } from '@/StateContext';
 
 const HomePage = () => {
   const { sharedGlobalState } = useSharedState();

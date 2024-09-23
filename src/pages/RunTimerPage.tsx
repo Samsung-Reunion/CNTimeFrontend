@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CircularProgressBar from '../components/circularProgressbar';
-import ActiveUser from '../components/ActiveUser';
-import Navigation from '../components/navigation';
-import doneImage from '../assets/done.png';
-import { useSharedState } from '../StateContext';
-import { formatTime } from '../utils/utils';
-import GoalModal from '../components/GoalModal';
-import Modal from '../components/Modal';
+import CircularProgressBar from '@components/CircularProgressbar';
+import ActiveUser from '@components/ActiveUser';
+import Navigation from '@components/Navigation';
+import doneImage from '@assets/done.png';
+import { useSharedState } from '@/StateContext';
+import { formatTime } from '@utils/utils';
+import GoalModal from '@components/GoalModal';
+import Modal from '@components/Modal';
 
 const RunTimerPage = () => {
   // Global State
@@ -24,7 +24,7 @@ const RunTimerPage = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
   const [maxTime] = useState<number>(time);
-  const [timeInterval, setTimeInterval] = useState<number>(-1);
+  const [timeInterval, setTimeInterval] = useState<number | NodeJS.Timeout>(-1);
 
   // Modal
   const [isGoalModalOpen, setIsGoalModalOpen] = useState<boolean>(false);

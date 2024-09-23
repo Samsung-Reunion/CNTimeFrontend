@@ -6,8 +6,9 @@
     "jsx": "react-jsx",
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "./dist"
   },
   "include": ["src/**/*"], // 프로젝트에 포함될 경로
-  "exclude": ["node_modules"] // 제외할 경로
+  "exclude": ["node_modules", "dist"] // 제외할 경로
 }

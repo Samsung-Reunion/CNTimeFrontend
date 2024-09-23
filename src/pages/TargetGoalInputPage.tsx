@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../index.css';
 import { useState } from 'react';
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import { useSharedState } from '../StateContext';
 
 const TargetGoalInputPage = () => {

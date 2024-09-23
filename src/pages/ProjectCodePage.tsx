@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import RoundedBtn from '../components/RoundedBtn';
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 
 const ProjectCodePage = () => {
   const projectCode = '012452';

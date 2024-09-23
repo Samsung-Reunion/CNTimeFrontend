@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CircularProgressBar from '../components/circularProgressbar';
+import CircularProgressBar from '../components/CircularProgressbar';
 import ActiveUser from '../components/ActiveUser';
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import doneImage from '../assets/done.png';
 import { useSharedState } from '../StateContext';
 import { formatTime } from '../utils/utils';

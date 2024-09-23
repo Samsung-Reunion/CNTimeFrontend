@@ -1,4 +1,4 @@
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import SquaredBtn from '../components/SquaredBtn';
 import { useNavigate } from 'react-router-dom';
 

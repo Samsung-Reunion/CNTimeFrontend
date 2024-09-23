@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSharedState } from '../StateContext';
-import CircularProgressBar from '../components/circularProgressbar';
+import CircularProgressBar from '../components/CircularProgressbar';
 import { formatTime } from '../utils/utils';
 import GoalModal from '../components/GoalModal';
 import Modal from '../components/Modal';

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import TeammateCard from '../components/TeammateCard';
 import { formatTimeHours } from '../utils/utils';
 import { useSharedState } from '../StateContext';

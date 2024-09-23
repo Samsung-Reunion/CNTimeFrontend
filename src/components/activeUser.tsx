@@ -1,4 +1,4 @@
-import exampleImage from "../assets/testProfile.png";
+import exampleImage from '../assets/testProfile.png';
 
 const ActiveUser = ({
   userName,
@@ -15,14 +15,15 @@ const ActiveUser = ({
           alt="profileImage"
           width="44px"
           height="44px"
-          style={{ borderRadius: "9999px" }}
+          style={{ borderRadius: '9999px' }}
         />
         {activeStatus && (
           <svg
             width="44px"
             height="44px"
             viewBox="0 0 44 44"
-            className="absolute right-0 top-0">
+            className="absolute right-0 top-0"
+          >
             <circle
               cx="39"
               cy="7"

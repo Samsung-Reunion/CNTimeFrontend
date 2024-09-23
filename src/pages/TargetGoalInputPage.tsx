@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../index.css';
 import { useState } from 'react';
 import Navigation from '../components/navigation';
+import { useSharedState } from '../StateContext';
 
 const TargetGoalInputPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -9,12 +10,20 @@ const TargetGoalInputPage = () => {
   const [isFocused, setIsFocused] = useState(false);
   const maxLength = 50; // 최대 글자 수 설정
 
+  // Global State
+  const { setSharedTimerState } = useSharedState();
+
   const handleCheckInput = (e: React.MouseEvent) => {
     if (inputValue.trim() === '') {
       e.preventDefault();
       setIsInputEmpty(true);
     } else {
       setIsInputEmpty(false);
+      setSharedTimerState({
+        total_work_time: 0,
+        current_goal: inputValue.trim(),
+        total_turn: 0,
+      });
     }
   };
 
@@ -36,7 +45,7 @@ const TargetGoalInputPage = () => {
           <h2 className="text-6xl">🎯</h2>
         </div>
       </div>
-      <h2 className="text-3xl text-white font-pretendard font-semibold mb-12">
+      <h2 className="text-2xl text-white font-pretendard font-semibold mb-12">
         목표를 입력해주세요
       </h2>
       <div className="relative w-96 mb-6">

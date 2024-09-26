@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Navigation from '../components/navigation';
 import TeammateCard from '../components/TeammateCard';
+import HomeNavigation from '../components/homeNavigation';
 
 const HomePage = () => {
   const radius = 280;
@@ -33,7 +33,7 @@ const HomePage = () => {
   ];
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
-      <Navigation canNavigateBack={false} currentProjectName={currentProject} />
+      <HomeNavigation currentProjectName={currentProject} />
       <div className="text-center text-[#6b727f] text-base font-medium font-['Pretendard']">
         오늘의 집중 시간
       </div>

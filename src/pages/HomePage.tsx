@@ -1,33 +1,53 @@
-import { Link } from 'react-router-dom';
-import Navigation from '@components/Navigation';
-import TeammateCard from '@components/TeammateCard';
-import { formatTimeHours } from '@utils/utils';
-import { useSharedState } from '@/StateContext';
+import { Link, useSearchParams } from "react-router-dom";
+import Navigation from "@components/Navigation";
+import TeammateCard from "@components/TeammateCard";
+import { formatTimeHours } from "@utils/utils";
+import { useSharedState } from "@/StateContext";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const HomePage = () => {
   const { sharedGlobalState } = useSharedState();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const state = searchParams.get("state");
+
   const radius = 280;
-  const currentProject = '개뿌 아자아자';
+  const currentProject = "개뿌 아자아자";
   // 시간을 분:초 형식으로 변환하는 함수
   const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
   const teammates = [
     {
-      profile: 'C',
-      name: '최소정',
-      time: '01:11:24',
+      profile: "C",
+      name: "최소정",
+      time: "01:11:24",
     },
     {
-      profile: 'I',
-      name: '임채림',
-      time: '01:00:04',
+      profile: "I",
+      name: "임채림",
+      time: "01:00:04",
     },
     {
-      profile: 'K',
-      name: '김재훈',
-      time: '00:30:04',
+      profile: "K",
+      name: "김재훈",
+      time: "00:30:04",
     },
   ];
+
+  useEffect(() => {
+    if (!state) return;
+
+    // 방금 로그인 했을 경우 toast 띄우기
+    if (state === "loggedIn" && Cookies.get("access_token")) {
+      toast.success("로그인에 성공하였습니다!");
+
+      // login 여부 값 알려주는 state param 삭제
+      searchParams.delete("state");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, state]);
+
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
       <Navigation canNavigateBack={false} currentProjectName={currentProject} />
@@ -57,10 +77,10 @@ const HomePage = () => {
             dominantBaseline="middle"
             textAnchor="middle"
             style={{
-              fontSize: '58px',
-              fontFamily: 'Pretendard',
-              fontWeight: '500',
-              border: 'transparent',
+              fontSize: "58px",
+              fontFamily: "Pretendard",
+              fontWeight: "500",
+              border: "transparent",
             }}
           >
             {focusTime}
@@ -109,9 +129,9 @@ const HomePage = () => {
             fill="transparent"
             filter="url(#blurFilter)"
             style={{
-              transition: 'stroke-dashoffset 1s linear',
-              border: 'transparent',
-              opacity: '100%',
+              transition: "stroke-dashoffset 1s linear",
+              border: "transparent",
+              opacity: "100%",
             }}
           />
           <circle

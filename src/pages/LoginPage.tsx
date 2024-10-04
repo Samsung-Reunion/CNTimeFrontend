@@ -46,7 +46,7 @@ const LoginPage = () => {
         return;
       }
 
-      const accessToken = (await res).data.data.jwt_token;
+      const accessToken = res.data.data.jwt_token;
 
       // Save access_token to cookie
       Cookies.set("access_token", accessToken, {

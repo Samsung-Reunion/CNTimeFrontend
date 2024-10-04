@@ -2,8 +2,8 @@ import { useState } from 'react';
 import ProjectBottomSheet from './ProjectBottomSheet';
 import ProjectCodePopup from './ProjectCodePopup';
 import { Project } from '../types';
-import { InviteMemberIcon } from '../assets/inviteMemberIcon.png';
-import { ProjectSwitchIcon } from '../assets/projectSwitchIcon.png';
+import InviteMemberIcon from '../assets/inviteMemberIcon.png';
+import ProjectSwitchIcon from '../assets/projectSwitchIcon.png';
 interface HomeNavigationProps {
   currentProjectName: Project;
   projects: Project[];
@@ -27,11 +27,14 @@ const HomeNavigation = ({
           className="text-lg flex justify-center items-center font-pretendard font-bold text-white"
         >
           {currentProjectName.projectName}
-          <ProjectSwitchIcon className="w-[9.5px] h-[14.25px] ml-[10px]" />
+          <img
+            src={ProjectSwitchIcon}
+            className="w-[9.5px] h-[14.25px] ml-[10px]"
+          />
         </button>
       )}
       <button onClick={() => setPopupOpen(true)}>
-        <InviteMemberIcon className="w-[50px] h-[50px]" />
+        <img src={InviteMemberIcon} className="w-[50px] h-[50px]" />
       </button>
       <ProjectBottomSheet
         isOpen={bottomSheetOpen}

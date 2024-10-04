@@ -1,25 +1,33 @@
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
+import { Project } from '../types';
 
 interface ProjectBottomSheetProps {
-  open: boolean;
-  setOpen: (arg0: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (arg0: boolean) => void;
+  projects: Project[];
+  setCurrentProject: (arg0: Project) => void;
 }
 interface CustomStyle extends React.CSSProperties {
   '--rsbs-bg'?: string;
 }
 
-const ProjectBottomSheet = ({ open, setOpen }: ProjectBottomSheetProps) => {
-  const handleProjectClick = (project: string) => {
+const ProjectBottomSheet = ({
+  isOpen,
+  setIsOpen,
+  projects,
+  setCurrentProject,
+}: ProjectBottomSheetProps) => {
+  const handleProjectClick = (project: Project) => {
     // 프로젝트 전환 로직
     console.log(`Switching to: ${project}`);
-    setOpen(false); // 바텀 시트 닫기
+    setIsOpen(false); // 바텀 시트 닫기
+    setCurrentProject(project);
   };
-  const projects = ['프로젝트 1', '프로젝트 2', '프로젝트 3'];
   return (
     <BottomSheet
-      open={open}
-      onDismiss={() => setOpen(false)}
+      open={isOpen}
+      onDismiss={() => setIsOpen(false)}
       //snapPoints={({ maxHeight }) => [maxHeight * 0.5, maxHeight * 0.9]} // 열리는 위치 설정
       style={
         {
@@ -41,7 +49,7 @@ const ProjectBottomSheet = ({ open, setOpen }: ProjectBottomSheetProps) => {
               <div className="w-[45px] h-[45px] bg-[#d9d9d9] rounded-full"></div>
               <div className="ml-4">
                 <div className="text-white text-base font-semibold">
-                  {project}
+                  {project.projectName}
                 </div>
                 <div className="text-neutral-400 text-sm">팀원 4명</div>
               </div>

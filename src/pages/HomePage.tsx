@@ -3,20 +3,18 @@ import TeammateCard from '../components/TeammateCard';
 import HomeNavigation from '../components/homeNavigation';
 import { useState } from 'react';
 import { PROJECTS, Project, TEAMMATES } from '../types';
+import { useSharedState } from '@/StateContext';
+import { formatTimeHours } from '@utils/utils';
+import Navigation from '@components/Navigation';
 
 const HomePage = () => {
   const [currentProject, setCurrentProject] = useState(PROJECTS[0]);
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
+    const { sharedGlobalState } = useSharedState();
+
   const radius = 280;
   // 시간을 분:초 형식으로 변환하는 함수
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60)
-      .toString()
-      .padStart(2, '0');
-    const seconds = (time % 60).toString().padStart(2, '0');
-    return `${minutes}:${seconds}`;
-  };
-  const focusTime = '00:10:02';
+  const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">

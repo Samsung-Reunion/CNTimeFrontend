@@ -6,8 +6,20 @@
     "jsx": "react-jsx",
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@assets/*": ["assets/*"],
+      "@utils/*": ["utils/*"],
+      "@pages/*": ["pages/*"],
+      "@/*": ["*"]
+    }
   },
-  "include": ["src/**/*"], // 프로젝트에 포함될 경로
-  "exclude": ["node_modules"] // 제외할 경로
+  "include": ["src"], // 프로젝트에 포함될 경로
+  "exclude": ["node_modules", "dist"] // 제외할 경로
 }

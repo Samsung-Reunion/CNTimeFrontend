@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface CircularProgressBarProps {
   percentage: number; // percentage의 타입을 명시적으로 지정
@@ -13,15 +13,14 @@ const CircularProgressBar = ({
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = (percentage / 100) * circumference;
 
-  console.log("per : " + percentage);
-
   return (
     <div className="flex items-center justify-center w-96 h-96 mt-4 mb-10">
       <svg
         className="transform -rotate-90"
         width="100%"
         height="100%"
-        viewBox="0 0 600 600">
+        viewBox="0 0 600 600"
+      >
         <defs>
           {/* 그라데이션 정의 */}
           <linearGradient id="backGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -34,7 +33,8 @@ const CircularProgressBar = ({
             x1="0%"
             y1="100%"
             x2="100%"
-            y2="0%">
+            y2="0%"
+          >
             <stop offset="0%" stopColor="#B9DBFF" />
             <stop offset="47%" stopColor="#7883FF" />
             <stop offset="100%" stopColor="#4CF7C7" />
@@ -50,7 +50,8 @@ const CircularProgressBar = ({
             y="-50%"
             width="200%"
             height="200%"
-            filterUnits="userSpaceOnUse">
+            filterUnits="userSpaceOnUse"
+          >
             <feGaussianBlur stdDeviation="7" />
           </filter>
         </defs>
@@ -62,9 +63,9 @@ const CircularProgressBar = ({
           stroke="url(#backGradient)"
           fill="transparent"
           style={{
-            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-            opacity: "30%",
-            border: "transparent",
+            boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+            opacity: '30%',
+            border: 'transparent',
           }}
         />
 
@@ -80,9 +81,9 @@ const CircularProgressBar = ({
           fill="transparent"
           filter="url(#blurFilter)"
           style={{
-            transition: "stroke-dashoffset 1s linear",
-            border: "transparent",
-            opacity: "100%",
+            transition: 'stroke-dashoffset 1s linear',
+            border: 'transparent',
+            opacity: '100%',
           }}
         />
 
@@ -97,8 +98,8 @@ const CircularProgressBar = ({
           stroke="url(#timerGradient)"
           fill="transparent"
           style={{
-            transition: "stroke-dashoffset 1s linear",
-            opacity: "100%",
+            transition: 'stroke-dashoffset 1s linear',
+            opacity: '100%',
           }}
         />
 
@@ -110,7 +111,8 @@ const CircularProgressBar = ({
           textAnchor="middle"
           transform="rotate(90, 300, 300)"
           className="font-pretendard text-8xl font-medium text-center"
-          style={{ border: "transparent" }}>
+          style={{ border: 'transparent' }}
+        >
           {timeText}
         </text>
       </svg>

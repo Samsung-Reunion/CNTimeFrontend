@@ -113,7 +113,7 @@ const HomePage = () => {
           <circle
             cx="300"
             cy="300"
-            r={radius}
+            r={RADIUS}
             strokeWidth="14"
             strokeLinecap="round"
             stroke="url(#backGradient)"

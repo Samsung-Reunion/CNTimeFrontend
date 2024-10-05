@@ -1,25 +1,24 @@
-import { Link ,useSearchParams} from 'react-router-dom';
-import Navigation from '@components/Navigation';
-import TeammateCard from '@components/TeammateCard';
-import { formatTimeHours } from '@utils/utils';
-import { useSharedState } from '@/StateContext';
-import { useState } from 'react';
-import { PROJECTS, Project, TEAMMATES } from '../types';
-import HomeNavigation from '../components/homeNavigation';
-import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import TeammateCard from "@components/TeammateCard";
+import { formatTimeHours } from "@utils/utils";
+import { useSharedState } from "@/StateContext";
+import { useState, useEffect } from "react";
+import { PROJECTS, Project, TEAMMATES } from "../types";
+import HomeNavigation from "../components/homeNavigation";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+
+const RADIUS = 280;
 
 const HomePage = () => {
   const { sharedGlobalState } = useSharedState();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const state = searchParams.get("state");
-
   const [currentProject, setCurrentProject] = useState(PROJECTS[0]);
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
 
-  const radius = 280;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const state = searchParams.get("state");
+
   // 시간을 분:초 형식으로 변환하는 함수
   const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
 
@@ -35,7 +34,6 @@ const HomePage = () => {
       setSearchParams(searchParams, { replace: true });
     }
   }, [searchParams, setSearchParams, state]);
-
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
@@ -130,7 +128,7 @@ const HomePage = () => {
           <circle
             cx="300"
             cy="300"
-            r={radius}
+            r={RADIUS}
             strokeWidth="14"
             strokeLinecap="round"
             stroke="url(#timerGradient)"
@@ -139,7 +137,7 @@ const HomePage = () => {
           <circle
             cx="300"
             cy="300"
-            r={radius - 30}
+            r={RADIUS - 30}
             strokeWidth="3"
             strokeLinecap="round"
             stroke="url(#timerGradient)"

@@ -1,8 +1,11 @@
-import { Link, useSearchParams } from "react-router-dom";
-import Navigation from "@components/Navigation";
-import TeammateCard from "@components/TeammateCard";
-import { formatTimeHours } from "@utils/utils";
-import { useSharedState } from "@/StateContext";
+import { Link ,useSearchParams} from 'react-router-dom';
+import Navigation from '@components/Navigation';
+import TeammateCard from '@components/TeammateCard';
+import { formatTimeHours } from '@utils/utils';
+import { useSharedState } from '@/StateContext';
+import { useState } from 'react';
+import { PROJECTS, Project, TEAMMATES } from '../types';
+import HomeNavigation from '../components/homeNavigation';
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
@@ -13,27 +16,12 @@ const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const state = searchParams.get("state");
 
+  const [currentProject, setCurrentProject] = useState(PROJECTS[0]);
+  const [projects, setProjects] = useState<Project[]>(PROJECTS);
+
   const radius = 280;
-  const currentProject = "개뿌 아자아자";
   // 시간을 분:초 형식으로 변환하는 함수
   const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
-  const teammates = [
-    {
-      profile: "C",
-      name: "최소정",
-      time: "01:11:24",
-    },
-    {
-      profile: "I",
-      name: "임채림",
-      time: "01:00:04",
-    },
-    {
-      profile: "K",
-      name: "김재훈",
-      time: "00:30:04",
-    },
-  ];
 
   useEffect(() => {
     if (!state) return;
@@ -48,10 +36,15 @@ const HomePage = () => {
     }
   }, [searchParams, setSearchParams, state]);
 
+
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
-      <Navigation canNavigateBack={false} currentProjectName={currentProject} />
-      <div className="text-center text-[#6b727f] text-base font-medium font-['Pretendard']">
+      <HomeNavigation
+        currentProjectName={currentProject}
+        projects={projects}
+        setCurrentProject={setCurrentProject}
+      />
+      <div className="text-center text-[#6b727f] text-base font-medium font-pretendard">
         오늘의 집중 시간
       </div>
       <div className="w-[270px] h-[70px] m-2">
@@ -158,22 +151,22 @@ const HomePage = () => {
         <div className="w-24 h-[38px] absolute top-[141px] left-[112px] px-3 py-[5.60px] bg-gradient-to-br from-[#b8daff] via-[#7782ff] to-[#4bf7c6] rounded-[28px] border border-[#9cb4ff] justify-center items-center gap-2 inline-flex">
           <Link
             to="/writegoal"
-            className="text-center text-[#101212] text-[19px] font-extrabold font-['Pretendard']"
+            className="text-center text-[#101212] text-[19px] font-extrabold font-pretendard"
           >
             시작하기
           </Link>
         </div>
       </div>
       <div className="flex-col justify-center mt-[32px]">
-        <div className="text-[#6b727f]  text-sm font-medium font-['Pretendard']">
+        <div className="text-[#6b727f]  text-sm font-medium font-pretendard">
           팀원정보
         </div>
-        {teammates.map((item, index) => (
+        {TEAMMATES.map((item, index) => (
           <TeammateCard
             key={index} // key 속성 추가
-            profile={item.profile}
-            name={item.name}
-            time={item.time}
+            profile={item.userImg}
+            name={item.userName}
+            time={item.userTime}
           />
         ))}
       </div>

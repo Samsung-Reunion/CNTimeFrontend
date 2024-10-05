@@ -1,12 +1,13 @@
-import { Link, useSearchParams } from "react-router-dom";
-import TeammateCard from "@components/TeammateCard";
-import { formatTimeHours } from "@utils/utils";
-import { useSharedState } from "@/StateContext";
-import { useState, useEffect } from "react";
-import { PROJECTS, Project, TEAMMATES } from "../types";
-import HomeNavigation from "../components/homeNavigation";
-import toast from "react-hot-toast";
-import Cookies from "js-cookie";
+import { Link, useSearchParams } from 'react-router-dom';
+import TeammateCard from '@components/TeammateCard';
+import { formatTimeHours } from '@utils/utils';
+import { useSharedState } from '@/StateContext';
+import { useState, useEffect } from 'react';
+import { PROJECTS, Project, TEAMMATES } from '../types';
+import HomeNavigation from '../components/homeNavigation';
+import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
+import { instance } from '@/api/config';
 
 const RADIUS = 280;
 
@@ -17,23 +18,38 @@ const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const state = searchParams.get("state");
+  const state = searchParams.get('state');
 
   // 시간을 분:초 형식으로 변환하는 함수
   const focusTime = formatTimeHours(sharedGlobalState.overall_work_time_today);
+
+  const getProjectList = async () => {
+    try {
+      const res = await instance.post('/project/all');
+      if (res) {
+        setProjects(res.data.projects);
+        console.log(res.data.project);
+      }
+    } catch {
+      toast.error('에러 발생 - 프로젝트 불러오기 실패');
+    }
+  };
 
   useEffect(() => {
     if (!state) return;
 
     // 방금 로그인 했을 경우 toast 띄우기
-    if (state === "loggedIn" && Cookies.get("access_token")) {
-      toast.success("로그인에 성공하였습니다!");
-
+    if (state === 'loggedIn' && Cookies.get('access_token')) {
+      toast.success('로그인에 성공하였습니다!');
       // login 여부 값 알려주는 state param 삭제
-      searchParams.delete("state");
+      searchParams.delete('state');
       setSearchParams(searchParams, { replace: true });
     }
   }, [searchParams, setSearchParams, state]);
+
+  useEffect(() => {
+    getProjectList();
+  }, []);
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
@@ -68,10 +84,10 @@ const HomePage = () => {
             dominantBaseline="middle"
             textAnchor="middle"
             style={{
-              fontSize: "58px",
-              fontFamily: "Pretendard",
-              fontWeight: "500",
-              border: "transparent",
+              fontSize: '58px',
+              fontFamily: 'Pretendard',
+              fontWeight: '500',
+              border: 'transparent',
             }}
           >
             {focusTime}
@@ -113,16 +129,16 @@ const HomePage = () => {
           <circle
             cx="300"
             cy="300"
-            r={radius}
+            r={RADIUS}
             strokeWidth="14"
             strokeLinecap="round"
             stroke="url(#backGradient)"
             fill="transparent"
             filter="url(#blurFilter)"
             style={{
-              transition: "stroke-dashoffset 1s linear",
-              border: "transparent",
-              opacity: "100%",
+              transition: 'stroke-dashoffset 1s linear',
+              border: 'transparent',
+              opacity: '100%',
             }}
           />
           <circle

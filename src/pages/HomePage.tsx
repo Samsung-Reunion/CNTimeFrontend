@@ -141,7 +141,7 @@ const HomePage = () => {
             strokeWidth="3"
             strokeLinecap="round"
             stroke="url(#timerGradient)"
-            stroke-dasharray="10, 10"
+            strokeDasharray="10, 10"
             fill="transparent"
           />
         </svg>

@@ -1,23 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import CircularProgressBar from '@components/CircularProgressbar';
 import ActiveUser from '@components/ActiveUser';
 import Navigation from '@components/Navigation';
 import doneImage from '@assets/done.png';
-import { useSharedState } from '@/StateContext';
-import { formatTime } from '@utils/utils';
+import {useSharedState} from '@/StateContext';
+import {formatTime} from '@utils/utils';
 import GoalModal from '@components/GoalModal';
 import Modal from '@components/Modal';
 
 const RunTimerPage = () => {
   // Global State
-  const { sharedTimerState, setSharedTimerState } = useSharedState();
+  const {sharedTimerState, setSharedTimerState} = useSharedState();
 
   const navigate = useNavigate();
   const target_goal = sharedTimerState.current_goal;
 
   const ppomoMinutesFixed = 0.1;
   const delayFinishTime = 2000;
+  const [goalClearedFlag, setGoalClearedFlag] = useState<boolean>(false);
 
   const [ppomoMinutes] = useState<number>(ppomoMinutesFixed);
   const [time, setTime] = useState<number>(ppomoMinutes * 60);
@@ -36,40 +37,34 @@ const RunTimerPage = () => {
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const handleGoalConfirm = () => {
-    closeGoalModal();
-    openConfirmModal();
+    handleGoalModalBase();
 
-    // timer 정지
-    setIsActive(false);
-
-    setSharedTimerState((prevState) => ({
-      ...prevState,
-      total_work_time:
-        sharedTimerState.total_work_time + Math.floor(maxTime - time),
-      total_turn:
-        time != maxTime
-          ? sharedTimerState.total_turn + 1
-          : sharedTimerState.total_turn,
-    }));
+    setGoalClearedFlag(true);
   };
 
   const handleGoalCancel = () => {
-    closeGoalModal();
+    handleGoalModalBase();
+
+    setGoalClearedFlag(false);
   };
 
   const handleCFConfirm = () => {
-    navigate('/finishtask', { state: { isGoalCleared: true } });
+    closeConfirmModal();
   };
   const handleCFCancel = () => {
-    closeConfirmModal();
-    navigate('/finishtask', { state: { isGoalCleared: false } });
+    console.log("IsGoalCleared : "+ goalClearedFlag)
+    navigate('/finishtask', {
+      state: {
+        isGoalCleared: goalClearedFlag
+      }
+    });
   };
 
   const testUsers = [
-    { userId: 1, userName: '팀원 1', activeStatus: true },
-    { userId: 2, userName: '팀원 2', activeStatus: false },
-    { userId: 3, userName: '팀원 3', activeStatus: true },
-    { userId: 4, userName: '팀원 4', activeStatus: false },
+    {userId: 1, userName: '팀원 1', activeStatus: true},
+    {userId: 2, userName: '팀원 2', activeStatus: false},
+    {userId: 3, userName: '팀원 3', activeStatus: true},
+    {userId: 4, userName: '팀원 4', activeStatus: false},
   ];
 
   useEffect(() => {
@@ -125,6 +120,24 @@ const RunTimerPage = () => {
     setIsActive(!isActive);
   };
 
+  const handleGoalModalBase = () => {
+    closeGoalModal();
+    openConfirmModal();
+
+    // timer 정지
+    setIsActive(false);
+
+    setSharedTimerState((prevState) => ({
+      ...prevState,
+      total_work_time:
+        sharedTimerState.total_work_time + Math.floor(maxTime - time),
+      total_turn:
+        time != maxTime
+          ? sharedTimerState.total_turn + 1
+          : sharedTimerState.total_turn,
+    }));
+  }
+
   return (
     <div className="w-full h-full">
       <GoalModal
@@ -139,7 +152,7 @@ const RunTimerPage = () => {
         onCancel={handleCFCancel}
       >
         <span className="font-pretendard font-white text-base font-medium">
-          목표 달성에 성공하셨나요?
+          계속 타이머를 진행할까요?
         </span>
       </Modal>
       {!isDone ? (
@@ -201,7 +214,7 @@ const RunTimerPage = () => {
           id="doneDiv"
           className="flex flex-col gap-2 justify-center items-center w-full h-full"
         >
-          <img src={doneImage} alt="done" className="w-1/3 mb-6" />
+          <img src={doneImage} alt="done" className="w-1/3 mb-6"/>
           <span className="font-pretendard text-2xl font-bold text-white">
             수고하셨어요 🎉
           </span>

@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSharedState } from '@/StateContext';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useSharedState} from '@/StateContext';
 import CircularProgressBar from '@components/CircularProgressbar';
-import { formatTime } from '@utils/utils';
+import {formatTime} from '@utils/utils';
 import GoalModal from '@components/GoalModal';
 import Modal from '@components/Modal';
 
 const RestTimerPage = () => {
-  const { sharedTimerState, setSharedTimerState } = useSharedState();
+  const {sharedTimerState, setSharedTimerState} = useSharedState();
   const navigate = useNavigate();
 
   // basic values
   const restMinutesFixed = 0.05;
   const target_goal = sharedTimerState.current_goal;
+  let goalClearedFlag = false;
 
   const [isDone, setIsDone] = useState<boolean>(false);
   const [restMinutes] = useState<number>(restMinutesFixed);
@@ -38,16 +39,20 @@ const RestTimerPage = () => {
   const handleGoalConfirm = () => {
     closeGoalModal();
     openConfirmModal();
+
+    goalClearedFlag = true;
   };
   const handleGoalCancel = () => {
     closeGoalModal();
+    openConfirmModal();
+
+    goalClearedFlag = false;
   };
   const handleCFConfirm = () => {
-    navigate('/finishtask', { state: { isGoalCleared: true } });
+    closeConfirmModal();
   };
   const handleCFCancel = () => {
-    closeConfirmModal();
-    navigate('/finishtask', { state: { isGoalCleared: false } });
+    navigate('/finishtask', {state: {isGoalCleared: goalClearedFlag}});
   };
 
   useEffect(() => {
@@ -118,13 +123,14 @@ const RestTimerPage = () => {
         onCancel={handleCFCancel}
       >
         <span className="font-pretendard font-white text-base font-medium">
-          목표 달성에 성공하셨나요?
+
         </span>
       </Modal>
       <div className="flex flex-col justify-top items-center">
         {!isDone ? (
           <div className="flex flex-col justify-top items-center w-full h-full ">
-            <div className="flex flex-row font-pretendard gap-4 text-lg font-medium justify-center items-end mt-28 mb-6 h-10">
+            <div
+              className="flex flex-row font-pretendard gap-4 text-lg font-medium justify-center items-end mt-28 mb-6 h-10">
               지금까지
               <div
                 id="totalTimeBox"
@@ -150,7 +156,7 @@ const RestTimerPage = () => {
               휴식시간이 종료되었어요
             </div>
             <div className="relative">
-              <CircularProgressBar percentage={100} timeText={''} />
+              <CircularProgressBar percentage={100} timeText={''}/>
               <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-3/4 text-center">
                 <div className="flex flex-row gap-2 justify-center items-center">
                   <svg
@@ -168,9 +174,9 @@ const RestTimerPage = () => {
                         x2="100%"
                         y2="70%"
                       >
-                        <stop offset="0%" stopColor="#B9DBFF" />
-                        <stop offset="47%" stopColor="#7883FF" />
-                        <stop offset="100%" stopColor="#4CF7C7" />
+                        <stop offset="0%" stopColor="#B9DBFF"/>
+                        <stop offset="47%" stopColor="#7883FF"/>
+                        <stop offset="100%" stopColor="#4CF7C7"/>
                       </linearGradient>
                     </defs>
                     <text
@@ -180,11 +186,12 @@ const RestTimerPage = () => {
                       dominantBaseline="middle"
                       textAnchor="middle"
                       className="font-pretendard text-3xl text-center font-bold "
-                      style={{ border: 'transparent' }}
+                      style={{border: 'transparent'}}
                     >
                       {nextStepTime + '초'}
                     </text>
-                  </svg>{' '}
+                  </svg>
+                  {' '}
                   뒤에
                 </div>
                 <div className="mt-1">타이머가 시작됩니다</div>

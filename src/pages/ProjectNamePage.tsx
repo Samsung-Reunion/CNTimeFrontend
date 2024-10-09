@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '@components/Navigation';
+import { instance } from '@/api/config';
+import toast from 'react-hot-toast';
 
 const ProjectNamePage = () => {
+  const navigate = useNavigate();
   const [text, setText] = useState('');
   // 입력 값이 변경될 때 호출되는 함수
   const [isInputEmpty, setIsInputEmpty] = useState(false); // for alert
@@ -15,6 +18,20 @@ const ProjectNamePage = () => {
       setIsInputEmpty(true);
     } else {
       setIsInputEmpty(false);
+      saveProject(text);
+    }
+  };
+  const saveProject = async (name: string) => {
+    try {
+      const res = await instance.post('/project', { name });
+      if (res) {
+        const projectCode = res.data.data.projectCode;
+        console.log(res.data);
+        toast.success(name + '을 성공적으로 생성했습니다.');
+        navigate('/projectcode', { state: { target_goal: projectCode } });
+      }
+    } catch {
+      toast.error('에러 발생 - 프로젝트 생성 실패');
     }
   };
   return (
@@ -51,14 +68,14 @@ const ProjectNamePage = () => {
             {text.length} / {maxLength}
           </span>
         </div>
-        <Link
-          to="/projectcode"
-          state={{ target_goal: text }}
+        <div
+          //to="/projectcode"
+          //state={{ target_goal: projectCode }}
           className="w-96 p-3 px-5 text-white bg-cntimer-blue rounded-full font-pretendard font-bold text-base text-center transition transform hover:bg-cntimer-blue-semidark  focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-99"
           onClick={handleCheckInput}
         >
           프로젝트 생성하기
-        </Link>
+        </div>
       </div>
     </div>
   );

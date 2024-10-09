@@ -5,12 +5,12 @@ import { Project } from '../types';
 import InviteMemberIcon from '../assets/inviteMemberIcon.png';
 import ProjectSwitchIcon from '../assets/projectSwitchIcon.png';
 interface HomeNavigationProps {
-  currentProjectName: Project;
+  currentProject: Project;
   projects: Project[];
   setCurrentProject: (arg0: Project) => void;
 }
 const HomeNavigation = ({
-  currentProjectName,
+  currentProject,
   projects,
   setCurrentProject,
 }: HomeNavigationProps) => {
@@ -19,14 +19,14 @@ const HomeNavigation = ({
 
   return (
     <div className="w-full py-6 pl-1 h-fit flex justify-between items-center gap-4">
-      {currentProjectName && (
+      {currentProject && (
         <button
           onClick={() => {
             setBottomSheetOpen(true);
           }}
           className="text-lg flex justify-center items-center font-pretendard font-bold text-white"
         >
-          {currentProjectName.projectName}
+          {currentProject.projectName}
           <img
             src={ProjectSwitchIcon}
             className="w-[9.5px] h-[14.25px] ml-[10px]"
@@ -40,9 +40,14 @@ const HomeNavigation = ({
         isOpen={bottomSheetOpen}
         setIsOpen={setBottomSheetOpen}
         projects={projects}
+        currentProject={currentProject}
         setCurrentProject={setCurrentProject}
       />
-      <ProjectCodePopup isOpen={popupOpen} setIsOpen={setPopupOpen} />
+      <ProjectCodePopup
+        isOpen={popupOpen}
+        setIsOpen={setPopupOpen}
+        projectCode={currentProject.code}
+      />
     </div>
   );
 };

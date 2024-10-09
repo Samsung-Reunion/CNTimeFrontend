@@ -3,7 +3,7 @@ import TeammateCard from '@components/TeammateCard';
 import { formatTimeHours } from '@utils/utils';
 import { useSharedState } from '@/StateContext';
 import { useState, useEffect } from 'react';
-import { PROJECTS, Project, TEAMMATES } from '../types';
+import { PROJECTS, Project, ProjectMember, TEAMMATES } from '../types';
 import HomeNavigation from '../components/homeNavigation';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
@@ -14,8 +14,9 @@ const RADIUS = 280;
 const HomePage = () => {
   const { sharedGlobalState } = useSharedState();
 
-  const [currentProject, setCurrentProject] = useState(PROJECTS[0]);
+  const [currentProject, setCurrentProject] = useState<Project>(PROJECTS[0]);
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
+  const [teammates, setTeammates] = useState<ProjectMember[]>(TEAMMATES);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const state = searchParams.get('state');
@@ -25,13 +26,32 @@ const HomePage = () => {
 
   const getProjectList = async () => {
     try {
-      const res = await instance.post('/project/all');
+      const res = await instance.get('/project/all');
       if (res) {
-        setProjects(res.data.projects);
-        console.log(res.data.project);
+        setProjects(res.data.data.projects);
+        setCurrentProject(res.data.data.projects[0]);
+        console.log(res.data.data.projects);
       }
     } catch {
       toast.error('에러 발생 - 프로젝트 불러오기 실패');
+    }
+  };
+
+  useEffect(() => {
+    if (currentProject) getProjectMember(currentProject.code);
+  }, [currentProject]);
+
+  const getProjectMember = async (projectCode: string) => {
+    try {
+      const res = await instance.get('/project/member/all', {
+        params: { projectCode },
+      });
+      if (res) {
+        console.log(res.data);
+        setTeammates(res.data.data.members);
+      }
+    } catch {
+      toast.error('에러 발생 - 프로젝트 정보 불러오기 실패');
     }
   };
 
@@ -54,7 +74,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
       <HomeNavigation
-        currentProjectName={currentProject}
+        currentProject={currentProject}
         projects={projects}
         setCurrentProject={setCurrentProject}
       />
@@ -175,17 +195,16 @@ const HomePage = () => {
         <div className="text-[#6b727f]  text-sm font-medium font-pretendard">
           팀원정보
         </div>
-        {TEAMMATES.map((item, index) => (
+        {teammates.map((item, index) => (
           <TeammateCard
             key={index} // key 속성 추가
-            profile={item.userImg}
-            name={item.userName}
-            time={item.userTime}
+            profile={item.profileImage}
+            name={item.name}
+            time={item.cumulateTime}
           />
         ))}
       </div>
     </div>
   );
 };
-
 export default HomePage;

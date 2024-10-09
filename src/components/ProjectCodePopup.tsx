@@ -3,10 +3,15 @@ import { useRef } from 'react';
 interface ProjectCodePopupProps {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
+  projectCode: string;
 }
 
-const ProjectCodePopup = ({ isOpen, setIsOpen }: ProjectCodePopupProps) => {
-  const PROJECTCODE = '012452';
+const ProjectCodePopup = ({
+  isOpen,
+  setIsOpen,
+  projectCode,
+}: ProjectCodePopupProps) => {
+  //const PROJECTCODE = '012452';
 
   // 텍스트를 담을 참조
   const textRef = useRef<HTMLDivElement | null>(null);
@@ -52,7 +57,7 @@ const ProjectCodePopup = ({ isOpen, setIsOpen }: ProjectCodePopupProps) => {
             ref={textRef}
             className="w-[218px] left-[33px] top-[37px] absolute text-center text-white text-4xl font-semibold font-pretendard tracking-wide"
           >
-            {PROJECTCODE}
+            {projectCode}
           </div>
         </div>
       </div>

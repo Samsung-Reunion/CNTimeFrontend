@@ -1,10 +1,12 @@
 import { useRef } from 'react';
 import RoundedBtn from '@components/RoundedBtn';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '@components/Navigation';
 
 const ProjectCodePage = () => {
-  const projectCode = '012452';
+  const location = useLocation();
+  const { target_goal } = location.state || {}; // state에서 target_goal을 가져옴
+  const projectCode = target_goal;
   const navigate = useNavigate(); // useNavigate 훅 사용
   const onClick = () => {
     navigate('/');

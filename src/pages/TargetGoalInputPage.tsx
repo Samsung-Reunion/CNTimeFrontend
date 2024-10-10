@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import Navigation from '@components/Navigation';
 import { useSharedState } from '@/StateContext';
 import '@/index.css';
 
 const TargetGoalInputPage = () => {
+  const location = useLocation();
+  const { current_project } = location.state || {}; // state에서 target_goal을 가져옴
   const [inputValue, setInputValue] = useState('');
   const [isInputEmpty, setIsInputEmpty] = useState(false); // for alert
   const [isFocused, setIsFocused] = useState(false);
@@ -78,7 +80,7 @@ const TargetGoalInputPage = () => {
 
       <Link
         to="/runtimer"
-        state={{ target_goal: inputValue }}
+        state={{ target_goal: inputValue, current_project: current_project }}
         className="w-96 p-3 px-5 text-white bg-cntimer-blue rounded-full font-pretendard font-bold text-base text-center transition transform hover:bg-cntimer-blue-semidark  focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-99"
         onClick={handleCheckInput}
       >

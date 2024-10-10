@@ -1,14 +1,7 @@
-interface User {
-  userId: string;
-  userName: string;
-  userEmail: string;
-  userImg: string;
-  provider: string;
-}
 export interface ProjectMember {
-  userName: string;
-  userImg: string;
-  userTime: string;
+  name: string;
+  profileImage: string;
+  cumulateTime: string;
 }
 
 export interface Project {
@@ -16,6 +9,7 @@ export interface Project {
   projectName: string;
   numberOfMember: number;
   color: string;
+  code: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -24,41 +18,45 @@ export const PROJECTS: Project[] = [
     projectName: '프로젝트1',
     numberOfMember: 4,
     color: '000000',
+    code: 'asdfds',
   },
   {
     projectId: '2',
     projectName: '프로젝트2',
     numberOfMember: 5,
     color: '000400',
+    code: 'dsfase',
   },
   {
     projectId: '3',
     projectName: '프로젝트3',
     numberOfMember: 1,
     color: '000041',
+    code: 'aejifd',
   },
   {
     projectId: '4',
     projectName: '프로젝트4',
     numberOfMember: 10,
     color: 'FFFFFF',
+    code: 'dafewe',
   },
 ];
 
 export const TEAMMATES: ProjectMember[] = [
   {
-    userImg: 'C',
-    userName: '최소정',
-    userTime: '01:11:24',
+    profileImage: 'C',
+    name: '최소정',
+    cumulateTime: '01:11:24',
   },
   {
-    userImg: 'I',
-    userName: '임채림',
-    userTime: '01:00:04',
+    profileImage: 'I',
+    name: '임채림',
+    cumulateTime: '01:00:04',
   },
   {
-    userImg: 'K',
-    userName: '김재훈',
-    userTime: '00:30:04',
+    profileImage: 'K',
+    name: '김재훈',
+    cumulateTime: '00:30:04',
   },
 ];

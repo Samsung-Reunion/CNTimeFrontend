@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '@components/Navigation';
+import { instance } from '@/api/config';
+import toast from 'react-hot-toast';
 
 const EnterNamePage = () => {
   const [text, setText] = useState('');
   // 입력 값이 변경될 때 호출되는 함수
   const [isInputEmpty, setIsInputEmpty] = useState(false); // for alert
   const [isFocused, setIsFocused] = useState(false);
+  const navigate = useNavigate();
   const maxLength = 10; // 최대 글자 수 설정
 
   const handleCheckInput = (e: React.MouseEvent) => {
@@ -15,6 +18,21 @@ const EnterNamePage = () => {
       setIsInputEmpty(true);
     } else {
       setIsInputEmpty(false);
+      saveUserName(text);
+    }
+  };
+
+  const saveUserName = async (name: string) => {
+    try {
+      const res = await instance.put('/user/name', { name });
+      if (res) {
+        console.log(name, res);
+
+        toast.success('환영합니다, ' + name + '님!');
+        navigate('/createorjoin');
+      }
+    } catch {
+      toast.error('에러 발생 - 이름 저장 실패');
     }
   };
   return (
@@ -51,14 +69,13 @@ const EnterNamePage = () => {
             {text.length} / {maxLength}
           </span>
         </div>
-        <Link
-          to="/createorjoin"
-          state={{ target_goal: text }}
+        <div
+          // state={{ target_goal: text }}
           className="w-96 p-3 px-5 text-white bg-cntimer-blue rounded-full font-pretendard font-bold text-base text-center transition transform hover:bg-cntimer-blue-semidark  focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-99"
           onClick={handleCheckInput}
         >
           시작하기
-        </Link>
+        </div>
       </div>
     </div>
   );

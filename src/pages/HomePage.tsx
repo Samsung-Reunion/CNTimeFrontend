@@ -185,6 +185,7 @@ const HomePage = () => {
         <div className="w-24 h-[38px] absolute top-[141px] left-[112px] px-3 py-[5.60px] bg-gradient-to-br from-[#b8daff] via-[#7782ff] to-[#4bf7c6] rounded-[28px] border border-[#9cb4ff] justify-center items-center gap-2 inline-flex">
           <Link
             to="/writegoal"
+            state={{ current_project: currentProject }}
             className="text-center text-[#101212] text-[19px] font-extrabold font-pretendard"
           >
             시작하기

@@ -15,6 +15,7 @@ const RunTimerPage = () => {
 
   const navigate = useNavigate();
   const target_goal = sharedTimerState.current_goal;
+  const current_project = sharedTimerState?.current_project;
 
   const ppomoMinutesFixed = 0.1;
   const delayFinishTime = 2000;

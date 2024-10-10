@@ -1,10 +1,3 @@
-interface User {
-  userId: string;
-  userName: string;
-  userEmail: string;
-  userImg: string;
-  provider: string;
-}
 export interface ProjectMember {
   name: string;
   profileImage: string;

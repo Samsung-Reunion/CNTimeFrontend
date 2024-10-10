@@ -1,21 +1,21 @@
-import {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CircularProgressBar from '@components/CircularProgressbar';
 import ActiveUser from '@components/ActiveUser';
 import Navigation from '@components/Navigation';
 import doneImage from '@assets/done.png';
-import {useSharedState} from '@/StateContext';
-import {formatTime} from '@utils/utils';
+import { useSharedState } from '@/StateContext';
+import { formatTime } from '@utils/utils';
 import GoalModal from '@components/GoalModal';
 import Modal from '@components/Modal';
 
 const RunTimerPage = () => {
   // Global State
-  const {sharedTimerState, setSharedTimerState} = useSharedState();
+  const { sharedTimerState, setSharedTimerState } = useSharedState();
 
   const navigate = useNavigate();
   const target_goal = sharedTimerState.current_goal;
-  const current_project = sharedTimerState?.current_project;
+  //const current_project = sharedTimerState?.current_project;
 
   const ppomoMinutesFixed = 0.1;
   const delayFinishTime = 2000;
@@ -53,19 +53,19 @@ const RunTimerPage = () => {
     closeConfirmModal();
   };
   const handleCFCancel = () => {
-    console.log("IsGoalCleared : "+ goalClearedFlag)
+    console.log('IsGoalCleared : ' + goalClearedFlag);
     navigate('/finishtask', {
       state: {
-        isGoalCleared: goalClearedFlag
-      }
+        isGoalCleared: goalClearedFlag,
+      },
     });
   };
 
   const testUsers = [
-    {userId: 1, userName: '팀원 1', activeStatus: true},
-    {userId: 2, userName: '팀원 2', activeStatus: false},
-    {userId: 3, userName: '팀원 3', activeStatus: true},
-    {userId: 4, userName: '팀원 4', activeStatus: false},
+    { userId: 1, userName: '팀원 1', activeStatus: true },
+    { userId: 2, userName: '팀원 2', activeStatus: false },
+    { userId: 3, userName: '팀원 3', activeStatus: true },
+    { userId: 4, userName: '팀원 4', activeStatus: false },
   ];
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const RunTimerPage = () => {
           ? sharedTimerState.total_turn + 1
           : sharedTimerState.total_turn,
     }));
-  }
+  };
 
   return (
     <div className="w-full h-full">
@@ -215,7 +215,7 @@ const RunTimerPage = () => {
           id="doneDiv"
           className="flex flex-col gap-2 justify-center items-center w-full h-full"
         >
-          <img src={doneImage} alt="done" className="w-1/3 mb-6"/>
+          <img src={doneImage} alt="done" className="w-1/3 mb-6" />
           <span className="font-pretendard text-2xl font-bold text-white">
             수고하셨어요 🎉
           </span>

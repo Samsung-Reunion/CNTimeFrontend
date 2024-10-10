@@ -46,7 +46,9 @@ const LoginPage = () => {
         return;
       }
 
-      const accessToken = res.data.data.jwt_token;
+      const { jwt_token: accessToken, isRegistered } = res.data.data;
+
+      console.log(accessToken, isRegistered);
 
       // Save access_token to cookie
       Cookies.set("access_token", accessToken, {
@@ -56,7 +58,8 @@ const LoginPage = () => {
         sameSite: "lax",
       });
 
-      if (accessToken) window.location.href = "/?state=loggedIn";
+      if (accessToken)
+        window.location.href = isRegistered ? "/?state=loggedIn" : "/entername";
     } catch {
       toast.error("에러 발생 - 로그인 실패");
     }

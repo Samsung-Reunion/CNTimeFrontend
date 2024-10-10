@@ -10,7 +10,7 @@ import { formatTimeHours } from '@utils/utils';
 
 const FinishTaskPage = () => {
   // Global State
-  const { sharedTimerState, sharedGlobalState, setSharedGlobalState } =
+  const { sharedTimerState, sharedGlobalState, setSharedGlobalState, setSharedTimerState} =
     useSharedState();
 
   // get local data
@@ -30,6 +30,10 @@ const FinishTaskPage = () => {
       overall_work_time_today:
         sharedGlobalState.overall_work_time_today +
         sharedTimerState.total_work_time,
+    }));
+    setSharedTimerState((prevState) => ({
+      ...prevState,
+      total_work_time: 0, // reset work time on current timer
     }));
     navigate('/');
   };

@@ -58,7 +58,7 @@ const ProjectBottomSheet = ({
                     {project.projectName}
                   </div>
                   <div className="text-neutral-400 font-pretendard text-sm">
-                    팀원 4명
+                    팀원 {project.numberOfMember}명
                   </div>
                 </div>
               </div>
